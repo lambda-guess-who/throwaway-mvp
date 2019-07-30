@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <title>Tweet</title>
+        <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
+
+
+    </head>
+    <body>
+
+    </body>
+</html>
+<h1>Tweets</h1>
+
+{% for user in users %}
+    <p><a href='/user/{{user.id}}'> {{user.username}}</a> </p>
+{% endfor %}
+<form method="POST" action="/">
+      <input name="username"/>
+      
+    <input type="submit">
+</form>
+<div class="add-tweet"> 
+    <hr>
+    <h2>Clear DB</h2>
+    <!--
+    <form method="POST">
+        Username: <input type="text" value="tweeuser1" name="username"><br>
+        Tweet: <input type="text" value="Sup!" name="tweet"><br>
+        <input type="submit" value="Submit"><br>
+    </form>
+    -->
+</div>
+<div class="clear-tweet"> 
+<form method="POST">
+    <input name='clear' type="hidden" value="clear">
+    <input type="submit" value="Clear DB"><br>
+</form>
+</div>

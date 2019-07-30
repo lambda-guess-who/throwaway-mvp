@@ -1,0 +1,20 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+flask = "*"
+psycopg2 = "*"
+flask-migrate = "*"
+tweepy = "*"
+basilica = "*"
+python-decouple = "*"
+scikit-learn = "*"
+authlib = "*"
+redis = "*"
+
+[requires]
+python_version = "3.7"

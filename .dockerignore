@@ -1,0 +1,5 @@
+Dockerfile
+.dockerignore
+build
+frontend/build
+frontend/node_modules
