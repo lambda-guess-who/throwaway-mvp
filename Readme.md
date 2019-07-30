@@ -99,14 +99,7 @@ $ docker-compose run frontend npm install [package]
 
 ```
 
-We still need to rebuild the image if we installed a dependency:
-
-```console
-
-$ docker-compose build
-
-```
-
+No need for rebuilding image on frontend packages install
   
 
 ## Deploying to Heroku:
