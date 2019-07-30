@@ -1,6 +1,5 @@
 import React, {useEffect, useContext} from 'react';
 import {postJSON, getJSON} from './helpers'
-import queryString from 'query-string'
 import Context from './Context'
 
 function LoginRedirect({location, history}){
@@ -16,8 +15,7 @@ function LoginRedirect({location, history}){
 
     }
     useEffect(()=>{
-        const qs = queryString.parse(location.search)
-        const verifier = qs.oauth_verifier
+        const verifier = location.search.split('oath_verifier=')[1]
         const nonce = localStorage.getItem('loginNonce')
         verfyLogin(nonce, verifier)
     }, [])
