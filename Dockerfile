@@ -15,6 +15,7 @@ RUN apt-get -y update
 RUN apt-get upgrade -y
 RUN apt-get install git build-essential python3-dev libpq-dev postgresql-client libssl-dev libffi-dev apache2 libapache2-mod-wsgi-py3 -y
 RUN a2enmod rewrite
+RUN a2enmod headers
 RUN pip install pipenv
 ENV LC_ALL="C.UTF-8"
 ENV LANG="C.UTF-8"
@@ -30,5 +31,4 @@ RUN useradd -m web
 COPY --from=builder /frontend/build /var/www/html
 RUN chown web:web /var/log/apache2 /var/run/apache2 /web_app /var/www/html -R
 USER web
-
 CMD apachectl -D FOREGROUND

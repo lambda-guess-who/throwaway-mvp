@@ -128,9 +128,11 @@ def create_app():
         resp = jsonify(users_dict)
         return resp
     
-    @app.route('/api/quickgame/<cat_id>/<count>')
-    def quickgame(cat_id, count):
+    @app.route('/api/quickgame/<cat_id>/<count>', defaults={'options': '2'})
+    @app.route('/api/quickgame/<cat_id>/<count>/<options>')
+    def quickgame(cat_id, count, options):
         count = int(count)
+        options = int(options)
         cat = Category.query.get(cat_id)
         tweets = cat.tweets_query.order_by(func.random()).limit(count).all()
         user_ids = [tweet.user_id for tweet in tweets]
@@ -138,16 +140,20 @@ def create_app():
         fake_users = []
         for tweet in tweets:
             fake_user = cat.users_query.filter(
-                TwitterUser.id != tweet.user_id).order_by(func.random()).first()
+                TwitterUser.id != tweet.user_id).order_by(func.random()).limit(options -1).all()
             fake_users.append(fake_user)
         game = zip(tweets, real_users, fake_users)
+        
         game_list = [{'tweet': tweet.text, 'options': random.sample([
-            {'handle': fake.username,
-             'photo': fake.profile_image_url, 'real': False},
+            *[{'handle': fake.username, 'name': fake.name,
+              'photo': fake.profile_image_url, 'real': False}
+              for fake in fakes],
             {'handle': real.username,
-             'photo': real.profile_image_url, 'real': True}
-        ], 2)}
-         for (tweet, real, fake) in game]
+             'photo': real.profile_image_url,
+             'name': real.name,
+             'real': True}
+        ], options)}
+         for (tweet, real, fakes) in game]
         return jsonify(game_list)
     @app.route('/clear_db')
     def clear():
